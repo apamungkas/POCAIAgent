@@ -5,7 +5,7 @@
 
 ### Section 1: Deploying and Developing Foundation
 
-<img width="568" height="840" alt="Section 1" src="https://github.com/user-attachments/assets/2a96ed68-ee26-4cd9-a515-a6fde578f505" />
+<img width="568" height="840" alt="Section 1" src="https://github.com/user-attachments/assets/b2017883-3d1c-47a7-9713-8fa27a8ad880" />
 
 In this step, we will make Frontend application that can call Backend (Azure Function App) and users can login with their Entra ID.
 
@@ -113,7 +113,7 @@ In this step, we will make Frontend application that can call Backend (Azure Fun
 
 ### Section 2: Connecting to APIM
 
-<img width="371" height="515" alt="Section 2" src="https://github.com/user-attachments/assets/b208bb87-45f2-4c2f-a173-5bb35b7148c8" />
+<img width="335" height="281" alt="Section 2" src="https://github.com/user-attachments/assets/58496736-a0b1-4887-be2d-1f8619f70192" />
 
 In this step, we will connect Frontend and Backend App to Azure API Management, so we can chat using different role, app will call different agent for each role.
 
@@ -171,8 +171,85 @@ In this step, we will ask news from Bing Search. It will answer and provide link
 	+ Confirm the link is working
 	+ Take screenshot
 
+### Section 4: Social Media and MCP Server
 
+<img width="875" height="642" alt="Section 4" src="https://github.com/user-attachments/assets/48b06716-b890-4947-bcdd-9189dfdaded2" />
 
+In this step, we will create YouTube MCP Server, so we can ask videos from YouTube API through MCP Server. It will answer and provide links.
+
+1. From Azure API Management
+	+ Create API from HTPP
+		+ Display Name: YouTube
+		+ Web Service URL: https://www.googleapis.com/youtube/v3
+	+ Settings, disable subscription required.
+	+ Add operation: search videos
+		+ Display name: search videos
+		+ URL: GET /search-videos
+		+ Description: Search relevant videos based on keywords
+		+ Query parameters:
+			+ q
+			+ maxResults, default 5
+			+ type, default video
+		+ Request Description
+		+ Response: 200 OK
+	+ Add policy
+		+ Adjust YouTube API Key
+	+ Test API in Azure APIM
+		+ q: Telco news Indonesia
+		+ maxResults: 5
+		+ type: video
+2. Create MCP Server in APIM
+	+ Create MCP Server
+	+ Expose an API as an MCP Server
+	+ Backend MCP Server
+		+ API: YouTube
+		+ API operations: search videos
+	+ MCP Server
+		+ Display name: MCP YouTube
+		+ Name: mcp-youtube
+		+ Description: MCP server for YouTube APIs
+	+ Note the server  URL: https://amagenticaidemo.azure-api.net/mcp/mcp
+3. Smoke test with MCP Inspector
+	+ From powershell: npx @modelcontextprotocol/inspector
+		+ MCP Inspector window will appear
+		+ Transport type: Streamable HTTP
+		+ URL: https://amagenticaidemo.azure-api.net/mcp/mcp
+		+ Connect
+		+ List Tools, select searchVideos
+		+ Fill parameters
+			+ q: Telco news Indonesia
+			+ maxResults: 5
+			+ type: video
+		+ Ensure response is success
+
+<img width="940" height="501" alt="image" src="https://github.com/user-attachments/assets/8196860a-2a95-463a-bc36-7f433cd55e2d" />
+
+4. Use MCP Server in VSCode
+	+ Create new directory
+	+ Add MCP Server
+	+ Start MCP Server
+	+ Set as agent, select tool: MCP YouTube
+	+ Ask Copilot
+5. Register MCP Server as actions/tools in Azure AI Foundry
+	+ Go to useragent
+	+ Add action: OpenAPI 3.0
+		+ Name: YouTube
+		+ Description: This action/tool is used for searching videos on YouTube based on keywords
+		+ Authentication method: Anonymous
+		+ Add OpenAPI schema
+		+ Adjust the APIM URL
+		+ If later using APIM subscription key, use the OpenAPI schema
+	+ Modify Agent “useragent” instruction
+		```-	You are a helpful customer support agent. Always answer in a polite, professional tone.
+		   -	Your job is to greet customer, and answer general questions.
+		   -	If user asks about your name, answer with "User Agent".
+		   -	You can use "YouTube" tool.
+		   -	If the user asks ‘what can you do?’, list the tool that you can access.
+		   -	When the user asks to search YouTube, call the "YouTube" tool with { q, maxResults }.
+6. Run streamlit app.py
+	+ Ask “what the latest videos in telco industry?”
+	+ Confirm the link is working
+	+ Take screenshot
 
 
 
