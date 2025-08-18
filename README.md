@@ -3,6 +3,10 @@
 <img width="4928" height="4160" alt="image" src="https://github.com/user-attachments/assets/4fbd589c-60a5-492a-9240-8e7e08b28061" />
 
 ### Section 1: Deploying and Developing Foundation
+
+<img width="2412" height="2488" alt="image" src="https://github.com/user-attachments/assets/ffe411ce-7253-4960-a6de-625e9ce2aaeb" />
+
+
 In this step, we will make Frontend application that can call Backend (Azure Function App) and users can login with their Entra ID.
 
 1. Create Resource Group
