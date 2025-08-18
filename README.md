@@ -278,61 +278,61 @@ In this step, we create tool action for sending an email, we can send paragraph 
 	+ Go to Logic App designer
 	+ Action “When a HTTP request is received”
 		+ Put request body JSON schema
-		```
-		{
-  			"type": "object",
-  			"properties": {
-    			"type": {
-      				"type": "string"
-    			},
-    			"properties": {
-      				"type": "object",
-      				"properties": {
-        				"recipients": {
-          					"type": "object",
-          					"properties": {
-            					"type": {
-              						"type": "string"
-            					},
-            					"items": {
-              						"type": "object",
-              						"properties": {
-                						"type": {
-                  							"type": "string"
-                						},
-                						"format": {
-                  							"type": "string"
-                						}
-              						}
-            					}
-          					}
-        				},
-        				"subject": {
-          					"type": "object",
-          					"properties": {
-            					"type": {
-              						"type": "string"
-            					}
-          					}
-        				},
-        				"bodyHtml": {
-          					"type": "object",
-          					"properties": {
-            					"type": {
-              						"type": "string"
-            					}
-          					}
-        				}
-      				}
-    			},
-    			"required": {
-      				"type": "array",
-      				"items": {
-        				"type": "string"
-      				}
-    			}
-  			}
-		}
+			```
+			{
+  				"type": "object",
+  				"properties": {
+    				"type": {
+      					"type": "string"
+    				},
+    				"properties": {
+      					"type": "object",
+      					"properties": {
+        					"recipients": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"items": {
+              							"type": "object",
+              							"properties": {
+                							"type": {
+                  								"type": "string"
+                							},
+                							"format": {
+                  								"type": "string"
+                							}
+              							}
+            						}
+          						}
+        					},
+        					"subject": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"bodyHtml": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						}
+          						}
+        					}
+      					}
+    				},
+    				"required": {
+      					"type": "array",
+      					"items": {
+        					"type": "string"
+      					}
+    				}
+  				}
+			}
 	+ Add Action “Send an email (V2)”
 		+ Sign in
 		+ Put to
@@ -408,6 +408,131 @@ In this step, we create tool action for schedule a meeting, we can send meeting 
 	+ Go to Logic App designer
 	+ Action “When a HTTP request is received”
 		+ Put request body JSON schema
+			{
+  				"type": "object",
+  				"properties": {
+    				"type": {
+      					"type": "string"
+    				},
+    				"properties": {
+      					"type": "object",
+      					"properties": {
+        					"subject": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"body": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"description": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"timeZone": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"description": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"start": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"description": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"end": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"description": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"calendarId": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"description": {
+              							"type": "string"
+            						}
+          						}
+        					},
+        					"requiredAttendees": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"items": {
+              							"type": "object",
+              							"properties": {
+                							"type": {
+                  								"type": "string"
+                							}
+              							}
+            						}
+          						}
+        					},
+        					"optionalAttendees": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						},
+            						"items": {
+              							"type": "object",
+              							"properties": {
+                							"type": {
+                  								"type": "string"
+                							}
+              							}
+            						}
+          						}
+        					},
+        					"location": {
+          						"type": "object",
+          						"properties": {
+            						"type": {
+              							"type": "string"
+            						}
+          						}
+        					}
+      					}
+    				},
+    				"required": {
+      					"type": "array",
+      					"items": {
+        					"type": "string"
+      					}
+    				},
+    				"additionalProperties": {
+      					"type": "boolean"
+    				}
+  				}
+			}
 		+ Put Inputs
 	+ Add Action “Compose”
 		+ Name: Compose Required
