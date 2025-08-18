@@ -1,11 +1,11 @@
 ### Architecture
 
-<img width="4928" height="4160" alt="image" src="https://github.com/user-attachments/assets/4fbd589c-60a5-492a-9240-8e7e08b28061" />
+<img width="1019" height="840" alt="POC AI Agent" src="https://github.com/user-attachments/assets/ba212628-877b-4335-b7ca-de93bbff10d5" />
+
 
 ### Section 1: Deploying and Developing Foundation
 
-<img width="2412" height="2488" alt="image" src="https://github.com/user-attachments/assets/ffe411ce-7253-4960-a6de-625e9ce2aaeb" />
-
+<img width="532" height="516" alt="Section 1" src="https://github.com/user-attachments/assets/3ead259a-ae1c-4ec1-ad1a-30f1bd3d1f34" />
 
 In this step, we will make Frontend application that can call Backend (Azure Function App) and users can login with their Entra ID.
 
