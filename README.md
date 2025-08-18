@@ -621,3 +621,55 @@ In this step we will call Microsoft Graph, so we can schedule meeting to specifi
 	+ Ask prompt: “Schedule a meeting with <someone_email>@<email_domain> and <another_email>@<email_domain> on 2025-08-20 14:00–15:00 Jakarta time, subject: Design Review, location: Microsoft Teams. Agenda: walkthrough; open issues; next steps.”
 	+ Take screenshot
 
+### Section 9: Secured Search
+
+<img width="1043" height="516" alt="Section 9" src="https://github.com/user-attachments/assets/65863429-4b38-4778-baa3-88c002ead18e" />
+
+In this step, we create AI Search index, we can query AI Search index with RLS and CLS.
+
+1. Deploy Azure SQL
+2. From Azure SQL editor
+	+ Create table
+	+ Create sample data
+3. Deploy Azure AI Search
+	+ Import data
+		+ Data Source: Azure SQL
+		+ Data source name: salesdata
+		+ Connection string: choose an existing connection
+		+ Table/View: SalesData
+		+ Customize target index
+			+ Index name: salesdata-index
+			+ All fields retrievable
+			+ Region filterable & facetable
+			+ Product searchable
+			+ UnitSold and TotalRevenue sortable
+		+ Create indexer
+			+ Indexer name: salesdata-indexer
+		+ Submit
+	+ Test search index
+4. Prepare AgenticAIApp_SecuredSearch workspace
+5. Prepare AgenticAIFunction_SecuredSearch workspace
+6. Deploy to Azure Function App
+	+ Add environment variables
+		```
+		"AZURE_SEARCH_ENDPOINT": "https://ssagenticaidemo.search.windows.net",
+		"AZURE_SEARCH_INDEX": "salesdata-index",
+		"AZURE_SEARCH_API_KEY": "<Azure_Search_API_Key",
+		"AZURE_SEARCH_API_VERSION": "2024-07-01"
+7. From Azure API Management
+	+ Under API /ai-chat, create new operation
+		+ Display name: secured search
+		+ URL: POST /secured-search
+		+ Description: Search sales data with RLS and CLS
+		+ Save
+	+ Add /secured-search policy
+		+ Adjust tenant-id, audience, group id, backend-service-base-url, function key
+	+ Test API
+		+ Add header: Authorization – Token
+		+ Body: `{ "question": "what is the most popular product?", "top": 1 }`
+8. Run streamlit app.py
+	+ Ask prompt: 
+		+ “what is the most popular product?”
+		+ “what is the most popular product in region…?”
+		+ “what is revenue of Data Booster 1GB?”
+	+ Take screenshot
