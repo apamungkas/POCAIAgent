@@ -347,6 +347,11 @@ In this step, we create tool action for sending an email, we can send paragraph 
 	+ Remove HTTP action
 	+ Action “Response”
 		+ Put body
+			```
+  			{
+   				"status": "sent",
+   				"to": "@{join(triggerBody()?['recipients'], ';')}"
+   			}	
 	+ Save
 3. From Azure AI Foundry
 	+ Set adminagent instruction:
