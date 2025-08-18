@@ -412,9 +412,9 @@ In this step, we create tool action for schedule a meeting, we can send meeting 
 
 ### Section 7: Send Email with OBO
 
-<img width="740" height="516" alt="Section 7" src="https://github.com/user-attachments/assets/1bbda4c1-1c68-481a-b65c-60b45f01783c" />
+<img width="719" height="516" alt="Section 7" src="https://github.com/user-attachments/assets/02f7d0cb-0693-4be7-b831-8ed40dbf68c4" />
 
-In this step, we will call Microsoft Graph, so we can summarize and send email to specific person with the logged-in user account.
+In this step we will call Microsoft Graph, so we can summarize and send email to specific person with the logged-in user account.
 
 1. In BE app registration go to Expose an API
 2. Add a scope
@@ -523,4 +523,101 @@ In this step, we will call Microsoft Graph, so we can summarize and send email t
 		+ Trace email, find IP address
 	+ Go to https://security.microsoft.com/
 		+ Whitelist IP address in email policy
+
+### Section 8: Schedule Meeting with OBO
+
+<img width="719" height="516" alt="Section 8" src="https://github.com/user-attachments/assets/76d520e0-982b-44cc-ac53-51ce1e0246d7" />
+
+In this step we will call Microsoft Graph, so we can schedule meeting to specific person with the logged-in user account.
+
+1. In BE app registration 
+2. Add API permission
+	+ Microsoft Graph
+	+ Delegated Permission
+	+ Calendar.ReadWrite
+	+ Grant admin consent
+3. Prepare AgenticAIApp_ScheduleMeetingOBO workspace
+4. Prepare AgenticAIFunction_ScheduleMeetingOBO workspace
+5. Deploy to Azure Function App
+6. From Azure API Management
+	+ Go to API – AI Chat
+		+ Add operation: schedule-as-user
+			+ Display name: schedule as user
+			+ URL: POST /schedule-as-user
+			+ Description: Schedule meeting to recipient as the login user
+			+ Request Description:
+		+ Response: 200 OK
+	+ Add policy
+		+ Adjust tenant-id, audience, backend-service-base-url, function key
+	+ Test API
+		+ Add header: Authorization – Token
+		+ Body
+			```
+			{
+  				"subject": "APIM OBO Meeting Test",
+  				"body": "<p>Agenda:<br/>- Smoke test</p>",
+  				"timeZone": "SE Asia Standard Time",
+  				"start": "2025-08-15T14:00:00",
+  				"end":   "2025-08-15T14:30:00",
+  				"calendarId": "Calendar",
+  				"requiredAttendees": ["you@contoso.com"],
+  				"optionalAttendees": [],
+  				"location": "Microsoft Teams"
+			}
+7. From Azure AI Foundry
+	+ Set adminagent instruction:
+		```
+		1. You are a helpful customer support agent. Always answer in a polite, professional tone.
+		2. Your job is to greet customer, and answer general questions.
+		3. Always use the Bing Search tool "bstelkomdemo01" when the user asks for real-time or current events information. Return the top result with title and summary.
+		4. If user asks about your name, answer with "Admin Agent".
+		5. If the user asks ‘what can you do?’, list the tool that you can access.
+		6. If the user says "summarize this and send email": 
+			- If the text is missing, ask: "Please paste the paragraphs to summarize."
+			- When text is provided, produce: 
+				a) SUBJECT: a short, specific line (max 8–12 words). No emojis. 
+				b) BODY HTML: concise executive summary in HTML using <p>, <ul>, <li>, <b>. 
+					- 5–7 bullets
+					- Bold key numbers/decisions
+					- No external CSS/images
+		7. Ask for recipients if missing: 
+			- "Who should receive it? Please provide one or more email addresses."
+		8. When you have BOTH the summary and recipients: 
+			- Output EXACTLY ONE fenced JSON code block and NOTHING else:
+				{
+					"recipients": ["alice@contoso.com","bob@contoso.com"],
+  					"subject": "<your short subject>",
+					"bodyHtml": "<!DOCTYPE html><html><body>...summary...</body></html>"
+				}
+			- Do NOT call any email-sending tool.
+		9. After emitting the JSON block: 
+			- Do not add any extra text before/after the block.
+			- Do not claim the email was sent; the app will handle sending.
+		10. Email draft rules:
+			- Fields must be exactly: recipients[] (emails), subject (string), bodyHtml (HTML string).
+			- Do NOT use fields like HTTP_request_content or HTTP_URI.
+			- Keep follow-up questions minimal and only to fill missing required fields.
+		11.	When the user asks to “schedule/book/set up” a meeting, extract:
+			- requiredAttendees (emails, ≥1), subject, start+end (or start+duration)
+			- Optional: optionalAttendees, location (default “Microsoft Teams”), calendarId (default “Calendar”)
+			- timeZone default “SE Asia Standard Time” (Jakarta)
+		12.	Scheduling rules:
+			- If any critical info is missing, ask one concise follow-up listing all missing items.
+			- Use ISO local times YYYY-MM-DDTHH:mm:ss. If only duration is given, compute end.
+			- Build a short HTML body (convert any line breaks/markdown to HTML).
+			- Validate: at least one attendee, valid emails (@ present), and end > start.
+		13.	When you have all required meeting details:
+			- Output EXACTLY ONE fenced JSON code block and NOTHING else:
+				{
+					"recipients": ["alice@contoso.com","bob@contoso.com"],
+			 		"subject": "<your short subject>",
+					"bodyHtml": "<!DOCTYPE html><html><body>...summary...</body></html>"
+				}
+			- Do NOT call any scheduling/meeting tool.
+		14.	After emitting the meeting JSON block:
+			- Do not add any extra text before/after the block.
+			- Do not claim the meeting was scheduled; the app will handle scheduling.
+8. Run streamlit app.py
+	+ Ask prompt: “Schedule a meeting with <someone_email>@<email_domain> and <another_email>@<email_domain> on 2025-08-20 14:00–15:00 Jakarta time, subject: Design Review, location: Microsoft Teams. Agenda: walkthrough; open issues; next steps.”
+	+ Take screenshot
 
