@@ -1,0 +1,176 @@
+/* Professional CSS for AI Chatbot Demo */
+
+/* Main header styling */
+.main-header {
+    text-align: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.main-header h1 {
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.main-header p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Authentication container */
+.auth-container {
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    margin: 2rem 0;
+}
+
+.auth-container h2 {
+    color: #1e40af;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.auth-container p {
+    color: #4b5563;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* Features section */
+.features-section {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.features-section p {
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.features-section ul {
+    display: inline-block;
+    text-align: left;
+    background: #f9fafb;
+    padding: 1.5rem 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    margin: 0;
+}
+
+.features-section li {
+    color: #4b5563;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+/* Sidebar styling */
+.sidebar-info {
+    background: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    border: 1px solid #e5e7eb;
+}
+
+.sidebar-info p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+/* Button styling */
+.stButton > button {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.stButton > button[kind="primary"]:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.stButton > button[kind="secondary"] {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+}
+
+/* Chat interface styling */
+.stChatMessage {
+    margin: 0.75rem 0;
+    border-radius: 0.5rem;
+}
+
+/* Alert styling */
+.stAlert {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 1rem;
+}
+
+.stAlert[data-baseweb="notification-kind-info"] {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border-left: 4px solid #3b82f6;
+}
+
+.stAlert[data-baseweb="notification-kind-error"] {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-left: 4px solid #ef4444;
+}
+
+.stAlert[data-baseweb="notification-kind-success"] {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border-left: 4px solid #22c55e;
+}
+
+/* Sidebar background */
+.css-1d391kg {
+    background-color: #f8fafc;
+}
+
+/* Remove default margins for cleaner layout */
+.block-container {
+    padding-top: 1rem;
+}
+
+/* Chat input styling */
+.stChatInput > div > div > div {
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+}
+
+.stChatInput > div > div > div:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}

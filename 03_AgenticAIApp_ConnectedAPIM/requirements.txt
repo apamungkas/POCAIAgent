@@ -1,0 +1,15 @@
+# Azure AI Services
+azure-ai-projects
+azure-identity
+
+# Microsoft Authentication
+msal
+requests
+
+# Configuration and Environment
+python-dotenv 
+pydantic
+pydantic-settings
+
+# Web Framework
+streamlit 

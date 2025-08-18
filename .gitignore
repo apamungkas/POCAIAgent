@@ -1,0 +1,16 @@
+01_AgenticAIApp_Login/.env
+02_AgenticAIFunction_Login/local.settings.json
+03_AgenticAIApp_ConnectedAPIM/.env
+04_AgenticAIFunction_ToolsAuth/local.settings.json
+05_AgenticAIApp_BingSearch/.env
+06_AgenticAIFunction_BingSearch/local.settings.json
+07_AgenticAIApp_SendEmail/.env
+08_AgenticAIFunction_SendEmail/local.settings.json
+09_AgenticAIApp_ScheduleMeeting/.env
+10_AgenticAIFunction_ScheduleMeeting/local.settings.json
+11_AgenticAIApp_SendEmailOBO/.env
+12_AgenticAIFunction_SendEmailOBO/local.settings.json
+13_AgenticAIApp_ScheduleMeetingOBO/.env
+14_AgenticAIFunction_ScheduleMeetingOBO/local.settings.json
+15_AgenticAIApp_SecuredSearch/.env
+16_AgenticAIFunctionSearch/local.settings.json
