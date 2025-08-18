@@ -2,6 +2,9 @@
 
 <img width="1019" height="840" alt="POC AI Agent" src="https://github.com/user-attachments/assets/ba212628-877b-4335-b7ca-de93bbff10d5" />
 
+### Section Works
+
+<img width="1077" height="858" alt="Section Works" src="https://github.com/user-attachments/assets/5fd50c07-ce07-4761-b87b-7d9aa47d7b6c" />
 
 ### Section 1: Deploying and Developing Foundation
 
@@ -278,61 +281,6 @@ In this step, we create tool action for sending an email, we can send paragraph 
 	+ Go to Logic App designer
 	+ Action “When a HTTP request is received”
 		+ Put request body JSON schema
-			```
-			{
-  				"type": "object",
-  				"properties": {
-    				"type": {
-      					"type": "string"
-    				},
-    				"properties": {
-      					"type": "object",
-      					"properties": {
-        					"recipients": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"items": {
-              							"type": "object",
-              							"properties": {
-                							"type": {
-                  								"type": "string"
-                							},
-                							"format": {
-                  								"type": "string"
-                							}
-              							}
-            						}
-          						}
-        					},
-        					"subject": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"bodyHtml": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						}
-          						}
-        					}
-      					}
-    				},
-    				"required": {
-      					"type": "array",
-      					"items": {
-        					"type": "string"
-      					}
-    				}
-  				}
-			}
 	+ Add Action “Send an email (V2)”
 		+ Sign in
 		+ Put to
@@ -408,148 +356,37 @@ In this step, we create tool action for schedule a meeting, we can send meeting 
 	+ Go to Logic App designer
 	+ Action “When a HTTP request is received”
 		+ Put request body JSON schema
-			{
-  				"type": "object",
-  				"properties": {
-    				"type": {
-      					"type": "string"
-    				},
-    				"properties": {
-      					"type": "object",
-      					"properties": {
-        					"subject": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"body": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"description": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"timeZone": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"description": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"start": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"description": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"end": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"description": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"calendarId": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"description": {
-              							"type": "string"
-            						}
-          						}
-        					},
-        					"requiredAttendees": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"items": {
-              							"type": "object",
-              							"properties": {
-                							"type": {
-                  								"type": "string"
-                							}
-              							}
-            						}
-          						}
-        					},
-        					"optionalAttendees": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						},
-            						"items": {
-              							"type": "object",
-              							"properties": {
-                							"type": {
-                  								"type": "string"
-                							}
-              							}
-            						}
-          						}
-        					},
-        					"location": {
-          						"type": "object",
-          						"properties": {
-            						"type": {
-              							"type": "string"
-            						}
-          						}
-        					}
-      					}
-    				},
-    				"required": {
-      					"type": "array",
-      					"items": {
-        					"type": "string"
-      					}
-    				},
-    				"additionalProperties": {
-      					"type": "boolean"
-    				}
-  				}
-			}
 		+ Put Inputs
+			```
+   			@join(triggerBody()?['requiredAttendees'], ';')
 	+ Add Action “Compose”
 		+ Name: Compose Required
 3. Add Action “Send a Teams meeting”
-		+ Sign in
-		+ Put subject
-		+ Put body event message content
-		+ Put time zone: SE Asia Standard Time
-		+ Put start time
-		+ Put end time
-		+ Put calendar ID in fx mode
-		+ Add required attendees
+   	+ Sign in
+	+ Put subject
+		```
+  		@triggerBody()?['subject']
+	+ Put body event message content
+		```
+  		@triggerBody()?['body']
+	+ Put time zone: SE Asia Standard Time
+	+ Put start time
+		```
+  		@triggerBody()?['start']
+	+ Put end time
+		```
+  		@triggerBody()?['end']
+	+ Put calendar ID in fx mode
+		```
+  		coalesce(triggerBody()?['calendarId'], 'Calendar')
+	+ Add required attendees
+		```
+  		@{outputs('Compose_Required')}
 	+ Remove HTTP action
 	+ Action “Response”
 		+ Put body
 	+ Save
-4. From Azure AI Foundry
+5. From Azure AI Foundry
 	+ Set adminagent instruction:
 		```
   		1. You are a helpful customer support agent. Always answer in a polite, professional tone.
@@ -603,9 +440,9 @@ In this step, we create tool action for schedule a meeting, we can send meeting 
 			- On success: confirm subject, date/time with timezone, attendees, and any join/weblink.
 			- On error: show the short error and ask for fixes.
 
-5. Test in playground
+6. Test in playground
 	+ Prompt: “Schedule a meeting with <someone_email>@<email_domain> tomorrow 15:00–15:30 WIB about Fabric Q3 review, online (Teams). Agenda: KPI dashboard; Action items.”
-6. Run streamlit app.py
+7. Run streamlit app.py
 	+ Ask the same prompt
 	+ Take screenshot
 
@@ -644,6 +481,16 @@ In this step we will call Microsoft Graph, so we can summarize and send email to
 			+ URL: POST /send-as-user
 			+ Description: Send email to recipient as the login user
 			+ Request Description:
+     			```
+        		{
+  					"type": "object",
+  					"properties": {
+    					"recipients": { "type": "array", "items": { "type": "string", "format": "email" } },
+    					"subject": { "type": "string" },
+    					"bodyHtml": { "type": "string" }
+  					},
+  					"required": ["recipients","subject","bodyHtml"]
+				}
 		+ Response: 200 OK
 	+ Add policy
 		+ Adjust tenant-id, audience, backend-service-base-url, function key
@@ -691,29 +538,6 @@ In this step we will call Microsoft Graph, so we can summarize and send email to
 			- Fields must be exactly: recipients[] (emails), subject (string), bodyHtml (HTML string).
 			- Do NOT use fields like HTTP_request_content or HTTP_URI.
 			- Keep follow-up questions minimal and only to fill missing required fields.
-		11. When the user asks to “schedule/book/set up” a meeting, extract: 
-			- requiredAttendees (emails, ≥1), subject, start+end (or start+duration)
-			- Optional: optionalAttendees, location (default “Microsoft Teams”), calendarId (default “Calendar”)
-			- timeZone default “SE Asia Standard Time” (Jakarta)
-		12. ScheduleMeeting_Tool Rules: 
-			- If any critical info is missing, ask one concise follow-up listing all missing items.
-			- Use ISO local times YYYY-MM-DDTHH:mm:ss. If only duration is given, compute end.
-			- Build a short HTML body (convert any line breaks/markdown to HTML).
-			- Validate: at least one recipient, valid emails (@ present), and end > start.
-		13. Call ScheduleMeeting_Tool once with: 
-			{ 
-				"subject": "<title>", 
-				"body": "<HTML agenda/notes>", 
-				"timeZone": "SE Asia Standard Time", 
-				"start": "YYYY-MM-DDTHH:mm:ss", 
-				"end": "YYYY-MM-DDTHH:mm:ss", 
-				"calendarId": "Calendar", 
-				"requiredAttendees": ["a@contoso.com"], "optionalAttendees": [], 
-				"location": "Microsoft Teams" 
-			}
-		14. After the tool returns: 
-			- On success: confirm subject, date/time with timezone, attendees, and any join/weblink.
-			- On error: show the short error and ask for fixes.
 10. Run streamlit app.py
 	+ Ask with prompt: “summarize and send email”
 	+ Take screenshot
@@ -745,6 +569,18 @@ In this step we will call Microsoft Graph, so we can schedule meeting to specifi
 			+ URL: POST /schedule-as-user
 			+ Description: Schedule meeting to recipient as the login user
 			+ Request Description:
+     			```
+        		{
+  					"subject": "Design Review",
+  					"body": "<p>Agenda...</p>",
+  					"timeZone": "SE Asia Standard Time",
+  					"start": "2025-08-20T14:00:00",
+  					"end":   "2025-08-20T15:00:00",
+  					"requiredAttendees": ["a@contoso.com","b@contoso.com"],
+  					"optionalAttendees": [],
+  					"location": "Microsoft Teams",
+  					"calendarId": "Calendar"
+				}
 		+ Response: 200 OK
 	+ Add policy
 		+ Adjust tenant-id, audience, backend-service-base-url, function key
@@ -829,7 +665,48 @@ In this step, we create AI Search index, we can query AI Search index with RLS a
 1. Deploy Azure SQL
 2. From Azure SQL editor
 	+ Create table
+		```
+  		CREATE TABLE SalesData (
+   		Id INT PRIMARY KEY,
+  		Region NVARCHAR(50),
+    	Product NVARCHAR(100),
+    	UnitSold INT,
+    	TotalRevenue FLOAT
+		);
 	+ Create sample data
+		```
+  		INSERT INTO SalesData (Id, Region, Product, UnitSold, TotalRevenue) VALUES
+		(1, 'region2', 'Mobile Plan A', 120, 2400),
+		(2, 'region2', 'Mobile Plan B', 85, 2550),
+		(3, 'region2', 'Internet 50Mbps', 65, 3250),
+		(4, 'region2', 'Internet 100Mbps', 40, 3200),
+		(5, 'region2', 'TV Package Basic', 50, 1500),
+		(6, 'region2', 'TV Package Premium', 35, 2100),
+		(7, 'region2', 'Data Booster 1GB', 200, 1000),
+		(8, 'region2', 'Roaming Pack', 30, 1800),
+		(9, 'region2', 'Home Phone', 25, 1250),
+		(10, 'region2', 'Unlimited Data Plan', 15, 4500),
+		(11, 'region3', 'Mobile Plan A', 110, 2200),
+		(12, 'region3', 'Mobile Plan B', 90, 2700),
+		(13, 'region3', 'Internet 50Mbps', 70, 3500),
+		(14, 'region3', 'Internet 100Mbps', 45, 3600),
+		(15, 'region3', 'TV Package Basic', 55, 1650),
+		(16, 'region3', 'TV Package Premium', 40, 2400),
+		(17, 'region3', 'Data Booster 1GB', 180, 900),
+		(18, 'region3', 'Roaming Pack', 28, 1680),
+		(19, 'region3', 'Home Phone', 20, 1000),
+		(20, 'region3', 'Unlimited Data Plan', 18, 5400),
+		-- Add more diverse combinations
+		(21, 'region2', 'Mobile Plan C', 75, 1875),
+		(22, 'region2', 'International Call Pack', 60, 3000),
+		(23, 'region2', 'Smart Home Bundle', 15, 6000),
+		(24, 'region3', 'Mobile Plan C', 70, 2100),
+		(25, 'region3', 'International Call Pack', 50, 2500),
+		(26, 'region3', 'Smart Home Bundle', 20, 8000),
+		(27, 'region2', 'Gaming Addon Pack', 45, 2250),
+		(28, 'region3', 'Gaming Addon Pack', 40, 2000),
+		(29, 'region2', 'Student Plan', 80, 1600),
+		(30, 'region3', 'Student Plan', 90, 1800);
 3. Deploy Azure AI Search
 	+ Import data
 		+ Data Source: Azure SQL
