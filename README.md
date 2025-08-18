@@ -86,12 +86,12 @@ In this step, we will make Frontend application that can call Backend (Azure Fun
     + Add the same for User, Region2, and Region3 
 9. Create Resource: Storage for App Function
 	```
-    az storage account create -n saagenticaidemo -g rg-agenticaidemo -l swedencentral --sku Standard_LRS --kind StorageV2
+    az storage account create -n <SA_Name> -g <RG_Name> -l <Location_Name> --sku Standard_LRS --kind StorageV2
 10. Create Resource: Function App
 	```
-    az functionapp plan create --name "fpagenticaidemo" --resource-group "rg-agenticaidemo" --location "swedencentral" --sku B1 --is-linux`
-    az functionapp create --name "faagenticaidemo" --storage-account "saagenticaidemo" --resource-group "rg-agenticaidemo" --plan "fpagenticaidemo" --runtime python --runtime-version 3.11 --functions-version 4`
-    az functionapp config appsettings set --name "faagenticaidemo" --resource-group "rg-agenticaidemo" --settings AI_FOUNDRY_CONNECTION_STRING="<Agent_Connection_String>" AGENT_ID_USER="<Agent_ID_User>" AGENT_ID_ADMIN="<Agent_ID_Admin>" AGENT_ID="<Agent_ID_Default>"`
+    az functionapp plan create --name "<FP_Name>" --resource-group "<RG_Name>" --location "<Location_Name" --sku B1 --is-linux`
+    az functionapp create --name "<FA_Name>" --storage-account "<SA_Name>" --resource-group "<RG_Name>" --plan "<FP_Name>" --runtime python --runtime-version 3.11 --functions-version 4`
+    az functionapp config appsettings set --name "<FA_Name>" --resource-group "<RG_Name>" --settings AI_FOUNDRY_CONNECTION_STRING="<Agent_Connection_String>" AGENT_ID_USER="<Agent_ID_User>" AGENT_ID_ADMIN="<Agent_ID_Admin>" AGENT_ID="<Agent_ID_Default>"
 11. Configure Function App
     + Turn on System Assigned Managed Identity
 12. Configure IAM for Function App from Resource Group
@@ -102,11 +102,11 @@ In this step, we will make Frontend application that can call Backend (Azure Fun
 14. Deploy to Azure Function App
 15. Test Azure Function App
 	```
-    az functionapp function keys list -g rg-agenticaidemo -n faagenticaidemo --function-name chat --query default -o tsv
+    az functionapp function keys list -g <RG_Name> -n <FA_Name> --function-name chat --query default -o tsv
 	```
-    + Note the key: <Chat_Function_Key>
+    Note the key: <Chat_Function_Key>
 	```
-    curl -X POST "https://faagenticaidemo.azurewebsites.net/api/chat?code=<Chat_Function_Key>" -H "Content-Type: application/json" -d '{"input":"Hello, can you help me?"}'
+    curl -X POST "https://<FA_Name>.azurewebsites.net/api/chat?code=<Chat_Function_Key>" -H "Content-Type: application/json" -d '{"input":"Hello, can you help me?"}'
 	```
 16. Prepare AgenticAIApp_Login workspace
 17. Test login - Authentication from UI
@@ -219,12 +219,12 @@ In this step, we will create YouTube MCP Server, so we can ask videos from YouTu
 		+ Display name: MCP YouTube
 		+ Name: mcp-youtube
 		+ Description: MCP server for YouTube APIs
-	+ Note the server  URL: https://amagenticaidemo.azure-api.net/mcp/mcp
+	+ Note the server  URL: https://<APIM_Name>.azure-api.net/mcp/mcp
 3. Smoke test with MCP Inspector
 	+ From powershell: npx @modelcontextprotocol/inspector
 		+ MCP Inspector window will appear
 		+ Transport type: Streamable HTTP
-		+ URL: https://amagenticaidemo.azure-api.net/mcp/mcp
+		+ URL: https://<APIM_Name>.azure-api.net/mcp/mcp
 		+ Connect
 		+ List Tools, select searchVideos
 		+ Fill parameters
