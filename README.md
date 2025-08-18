@@ -5,7 +5,7 @@
 
 ### Section 1: Deploying and Developing Foundation
 
-<img width="370" height="515" alt="Section 1" src="https://github.com/user-attachments/assets/35b44663-4cd8-4b76-936a-addac769c226" />
+<img width="568" height="840" alt="Section 1" src="https://github.com/user-attachments/assets/2a96ed68-ee26-4cd9-a515-a6fde578f505" />
 
 In this step, we will make Frontend application that can call Backend (Azure Function App) and users can login with their Entra ID.
 
@@ -156,6 +156,22 @@ In this step, we will connect Frontend and Backend App to Azure API Management, 
 		+ Ask “what is your name?”
 		+ Ask “what can you do for me?”
 		+ Take screenshot
+
+### Section 3: Bing Search
+
+<img width="503" height="336" alt="Section 3" src="https://github.com/user-attachments/assets/dcda9949-602e-45fc-b051-9aca03b4ece8" />
+
+In this step, we will ask news from Bing Search. It will answer and provide links.
+
+1. Prepare AgenticAIFunction_BingSearch workspace
+	+ Deploy to Azure Function App
+2. Prepare AgenticAIApp_BingSearch workspace
+	+ Run streamlit app.py
+	+ Ask “what the latest news in telco industry?”
+	+ Confirm the link is working
+	+ Take screenshot
+
+
 
 
 
