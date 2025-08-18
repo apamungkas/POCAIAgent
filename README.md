@@ -728,7 +728,7 @@ In this step, we create AI Search index, we can query AI Search index with RLS a
 6. Deploy to Azure Function App
 	+ Add environment variables
 		```
-		"AZURE_SEARCH_ENDPOINT": "https://ssagenticaidemo.search.windows.net",
+		"AZURE_SEARCH_ENDPOINT": "<Azure_Search_Endpoint>",
 		"AZURE_SEARCH_INDEX": "salesdata-index",
 		"AZURE_SEARCH_API_KEY": "<Azure_Search_API_Key",
 		"AZURE_SEARCH_API_VERSION": "2024-07-01"
