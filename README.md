@@ -278,11 +278,72 @@ In this step, we create tool action for sending an email, we can send paragraph 
 	+ Go to Logic App designer
 	+ Action “When a HTTP request is received”
 		+ Put request body JSON schema
+		```
+		{
+  			"type": "object",
+  			"properties": {
+    			"type": {
+      				"type": "string"
+    			},
+    			"properties": {
+      				"type": "object",
+      				"properties": {
+        				"recipients": {
+          					"type": "object",
+          					"properties": {
+            					"type": {
+              						"type": "string"
+            					},
+            					"items": {
+              						"type": "object",
+              						"properties": {
+                						"type": {
+                  							"type": "string"
+                						},
+                						"format": {
+                  							"type": "string"
+                						}
+              						}
+            					}
+          					}
+        				},
+        				"subject": {
+          					"type": "object",
+          					"properties": {
+            					"type": {
+              						"type": "string"
+            					}
+          					}
+        				},
+        				"bodyHtml": {
+          					"type": "object",
+          					"properties": {
+            					"type": {
+              						"type": "string"
+            					}
+          					}
+        				}
+      				}
+    			},
+    			"required": {
+      				"type": "array",
+      				"items": {
+        				"type": "string"
+      				}
+    			}
+  			}
+		}
 	+ Add Action “Send an email (V2)”
 		+ Sign in
 		+ Put to
+			```
+   			@join(triggerBody()?['recipients'], ';')
 		+ Put subject
+			```
+   			@triggerBody()?['subject']
 		+ Put body
+			```
+   			@triggerBody()?['bodyHtml']
 	+ Remove HTTP action
 	+ Action “Response”
 		+ Put body
