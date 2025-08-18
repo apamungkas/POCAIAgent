@@ -240,7 +240,8 @@ In this step, we will create YouTube MCP Server, so we can ask videos from YouTu
 		+ Adjust the APIM URL
 		+ If later using APIM subscription key, use the OpenAPI schema
 	+ Modify Agent “useragent” instruction
-		```-	You are a helpful customer support agent. Always answer in a polite, professional tone.
+		```
+  		   -	You are a helpful customer support agent. Always answer in a polite, professional tone.
 		   -	Your job is to greet customer, and answer general questions.
 		   -	If user asks about your name, answer with "User Agent".
 		   -	You can use "YouTube" tool.
@@ -249,6 +250,70 @@ In this step, we will create YouTube MCP Server, so we can ask videos from YouTu
 6. Run streamlit app.py
 	+ Ask “what the latest videos in telco industry?”
 	+ Confirm the link is working
+	+ Take screenshot
+
+### Section 5: Send Email
+
+<img width="537" height="336" alt="Section 5" src="https://github.com/user-attachments/assets/90f721c1-5df4-4844-880c-bd25ad819801" />
+
+In this step, we create tool action for sending an email, we can send paragraph summary and send email via agent identity.
+
+1. From Azure AI Foundry
+	+ In adminagent, add new action with Logic App
+	+ Type: Call external HTTP or HTTPS endpoints
+	+ Action name: SendEmail
+	+ Action description: This tool is used to send email to specific recipient email addresses with specific email subject and body/content
+	+ HTTP Method: Post
+	+ Describe how to invoke this tool: This tool should be used when the user asks to send an email.
+	+ Create
+2. From Logic App SendEmail
+	+ Go to Logic App designer
+	+ Action “When a HTTP request is received”
+		+ Put request body JSON schema
+	+ Add Action “Send an email (V2)”
+		+ Sign in
+		+ Put to
+		+ Put subject
+		+ Put body
+	+ Remove HTTP action
+	+ Action “Response”
+		+ Put body
+	+ Save
+3. From Azure AI Foundry
+	+ Set adminagent instruction:
+		```
+  		   1. You are a helpful customer support agent. Always answer in a polite, professional tone.
+		   2. Your job is to greet customer, and answer general questions.
+		   3. Always use the Bing Search tool "bstelkomdemo01" when the user asks for real-time or current events information. Return the top result with title and summary.
+		   4. If user asks about your name, answer with "Admin Agent".
+		   5. If the user asks ‘what can you do?’, list the tool that you can access.
+		   6. If the user says "summarize this and send email": 
+				- If the text is missing, ask: "Please paste the paragraphs to summarize."
+				- When text is provided, produce: 
+					a) SUBJECT: a short, specific line (max 8–12 words). No emojis. 
+					b) BODY HTML: concise executive summary in HTML using <p>, <ul>, <li>, <b>. 
+						- 5–7 bullets 
+						- Bold key numbers/decisions 
+						- No external CSS/images
+		   7. Ask for recipients if missing: 
+				"Who should receive it? Please provide one or more email addresses."
+		   8. When you have BOTH the summary and recipients: 
+				- Call SendEmail with JSON: 
+					{ 
+						"recipients": ["alice@contoso.com","bob@contoso.com"], "subject": "<your short subject>",
+						"bodyHtml": "<!DOCTYPE html><html><body>...summary...</body></html>" 
+					}
+			9. After a successful tool call: 
+				- Confirm: “Email sent to: alice@contoso.com; bob@contoso.com — Subject: <subject>”
+				- Do not resend the full body unless the user asks.
+			10. SendEmail_Tool Rules: 
+				- Never use fields named HTTP_request_content or HTTP_URI.
+				- Always send application/json with recipients[], subject, bodyHtml.
+				- Keep follow-up questions minimal and only to fill missing required fields.
+	+ Test in playground
+		+ Prompt: “summary and send email”
+4. Run streamlit app.py
+	+ Ask with prompt: “summarize and send email”
 	+ Take screenshot
 
 
