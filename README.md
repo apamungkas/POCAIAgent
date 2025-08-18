@@ -5,7 +5,7 @@
 
 ### Section 1: Deploying and Developing Foundation
 
-<img width="532" height="516" alt="Section 1" src="https://github.com/user-attachments/assets/3ead259a-ae1c-4ec1-ad1a-30f1bd3d1f34" />
+<img width="370" height="515" alt="Section 1" src="https://github.com/user-attachments/assets/35b44663-4cd8-4b76-936a-addac769c226" />
 
 In this step, we will make Frontend application that can call Backend (Azure Function App) and users can login with their Entra ID.
 
@@ -109,6 +109,55 @@ In this step, we will make Frontend application that can call Backend (Azure Fun
 
 16. Prepare AgenticAIApp workspace
 17. Test login - Authentication from UI
-18. Take screenshot.
+18. Take screenshot
+
+### Section 2: Connecting to APIM
+
+<img width="371" height="515" alt="Section 2" src="https://github.com/user-attachments/assets/b208bb87-45f2-4c2f-a173-5bb35b7148c8" />
+
+In this step, we will connect Frontend and Backend App to Azure API Management, so we can chat using different role, app will call different agent for each role.
+
+1. Create Resource: API Management
+	+ Create API from HTPP
+		+ Display Name: AI Chat
+		+ API URL Suffix:  ai-chat
+	+ Settings, disable subscription required
+	+ Add operation: chat
+		+ Display name: chat
+		+ URL: POST /chat
+		+ Description: Send message to AI agent and receive response
+		+ Request Description:
+	+ Response: 200 OK
+	+ Add API policy
+		+ Adjust tenant-id, audience, group id, backend-service-base-url, function key
+2. Prepare AgenticAIApp_ConnectedAPIM workspace
+	+ Run streamlit app.py
+	+ Login as User
+		+ Take screenshot
+	+ Login as Admin
+		+ Take screenshot
+	+ Ensure we have correct “aud” and “scp”. Copy the <token> from helper panel
+3. Go to APIM API /ai-chat operation /chat
+	+ Test with:
+		+ Authorization: Bearer <token>
+		+ Content-type: application/json
+		+ Body: {“input”:”hi”}
+
+<img width="940" height="598" alt="image" src="https://github.com/user-attachments/assets/d609a57c-4e4a-4e30-9022-038eb8680366" />
+
+4. Prepare AgenticAIFunction_ToolsAuth workspace
+	+ Deploy to Azure App Function
+5. Run streamlit
+	+ Login as User
+		+ Ask “what is your name?”
+		+ Ask “what can you do for me?”
+		+ Take screen shot
+	+ Login as Admin
+		+ Ask “what is your name?”
+		+ Ask “what can you do for me?”
+		+ Take screenshot
+
+
+
 
 
