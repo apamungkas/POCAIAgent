@@ -4,7 +4,7 @@
 
 ### Section Works
 
-<img width="1077" height="858" alt="Section Works" src="https://github.com/user-attachments/assets/5fd50c07-ce07-4761-b87b-7d9aa47d7b6c" />
+<img width="2032" height="1142" alt="image" src="https://github.com/user-attachments/assets/94ee1f7f-fbbe-4771-a218-dd759225a598" />
 
 ### Section 1: Deploying and Developing Foundation
 
