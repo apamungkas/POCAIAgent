@@ -119,7 +119,7 @@ In this step, we will make Frontend application that can call Backend (Azure Fun
 In this step, we will connect Frontend and Backend App to Azure API Management, so we can chat using different role, app will call different agent for each role.
 
 1. Create Resource: API Management
-	+ Create API from HTPP
+	+ Create API from HTTP
 		+ Display Name: AI Chat
 		+ API URL Suffix:  ai-chat
 	+ Settings, disable subscription required
